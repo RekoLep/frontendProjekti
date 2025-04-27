@@ -49,7 +49,7 @@ export function CustomerTable({ customers, removeCustomer, loadCustomers }) {
     <Stack sx={{ display: "flex", flexGrow: 1, flexDirection: "column", gap: 2, padding: 2 }}>
       <Typography variant="h6">Customers ({customers.length})</Typography>
       <AddCustomer addCustomer={addCustomer} loadCustomers={loadCustomers} />
-      <Box sx={{ flexGrow: 1, width: "100%", height: 100 }}>
+      <Box sx={{ flexGrow: 1, width: "100%", height: 500 }}>
         <AgGridReact rowData={customers} columnDefs={colDefs} />
       </Box>
     </Stack>
