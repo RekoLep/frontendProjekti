@@ -10,7 +10,7 @@ export async function getTrainings() {
     return data;
 }
 
-// Hakee yhden treenin ID:llä (ei pakollinen jos et tarvitse yksittäishakuja)
+// Hakee treenin ID:n perusteella
 export async function getTrainingById(id) {
     const response = await fetch(`${BASE_URL}/trainings/${id}`);
     if (!response.ok) {
@@ -31,6 +31,19 @@ export async function addTraining(training) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
     return await response.json(); // Palautetaan luotu treeni
+}
+
+// Päivittää olemassa olevan treenin
+export async function updateTraining(id, training) {
+    const response = await fetch(`${BASE_URL}/trainings/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(training),
+    });
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json(); // Palautetaan päivitetty treeni
 }
 
 // Poistaa treenin

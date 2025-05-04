@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { getCustomers, deleteCustomer } from "./customerApi";
 import { CustomerTable } from "./CustomerTable";
 import { Container, Typography } from "@mui/material";
+import { Routes, Route, Link } from "react-router-dom";
 
-function App() {
+function CustomerManagement() {
   const [customers, setCustomers] = useState([]);
 
   const loadCustomers = async () => {
@@ -17,7 +18,7 @@ function App() {
 
   const removeCustomer = async (customer) => {
     if (window.confirm(`Delete customer ${customer.firstname} ${customer.lastname}?`)) {
-      const id = customer._links.customer.href.split('/').pop();
+      const id = customer._links.customer.href.split("/").pop();
       await deleteCustomer(id);
       loadCustomers();
     }
@@ -30,14 +31,26 @@ function App() {
   return (
     <Container maxWidth="lg">
       <Typography variant="h4" gutterBottom>
-        Customer Management
+        Customer Management 🏃‍♀️‍➡️
       </Typography>
-      <CustomerTable 
-        customers={customers} 
-        removeCustomer={removeCustomer} 
-        loadCustomers={loadCustomers} 
+      <Typography variant="h5" gutterBottom>
+      <Link to="/TrainingsList">Link to Trainings Mangement</Link>
+      </Typography>
+      
+      <CustomerTable
+        customers={customers}
+        removeCustomer={removeCustomer}
+        loadCustomers={loadCustomers}
       />
     </Container>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<CustomerManagement />} />
+    </Routes>
   );
 }
 
