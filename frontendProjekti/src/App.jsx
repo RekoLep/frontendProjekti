@@ -5,6 +5,7 @@ import { Container, Typography } from "@mui/material";
 import { Routes, Route, Link } from "react-router-dom";
 import ExportCustomers from "./ExportCustomers";
 import CalendarView from "./CalendarView";
+import TrainingsList from "./TrainingsList";
 
 function CustomerManagement() {
   const [customers, setCustomers] = useState([]);
@@ -36,11 +37,11 @@ function CustomerManagement() {
         Customer Management 🏃‍♀️‍➡️
       </Typography>
       <Typography variant="h5" gutterBottom>
-      <Link to="/TrainingsList">Link to Training Mangement</Link>
+        <Link to="/TrainingsList">Link to Training Management</Link>
       </Typography>
       <ExportCustomers customers={customers} />
       <Typography variant="h5" gutterBottom>
-      <Link to="/CalendarView">Calendar</Link>
+        <Link to="/CalendarView">Calendar</Link>
       </Typography>
       <CustomerTable
         customers={customers}
@@ -55,6 +56,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<CustomerManagement />} />
+      <Route path="/TrainingsList" element={<TrainingsList />} />
+      <Route path="/CalendarView" element={<CalendarView />} />
     </Routes>
   );
 }

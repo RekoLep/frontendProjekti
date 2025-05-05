@@ -5,7 +5,6 @@ import AddTrainings from "./AddTrainings"; // Lisää treeni
 import { Container, Typography } from "@mui/material";
 import { Routes, Route, Link } from "react-router-dom";
 
-
 function TrainingsManagement() {
   const [trainings, setTrainings] = useState([]);
 
@@ -22,7 +21,7 @@ function TrainingsManagement() {
     if (window.confirm(`Delete training on ${training.date}?`)) {
       const id = training.id;
       await deleteTraining(id);
-      await loadTrainings(); 
+      await loadTrainings();
     }
   };
 
@@ -36,7 +35,7 @@ function TrainingsManagement() {
         Training Management 🏋️‍♂️
       </Typography>
       <Typography variant="h5" gutterBottom>
-        <Link to="/">Link to Customers Management</Link>
+        <Link to="/#/">Link to Customers Management</Link>
       </Typography>
       <TrainingsTable
         trainings={trainings}
