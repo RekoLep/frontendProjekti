@@ -5,6 +5,7 @@ import AddTrainings from "./AddTrainings"; // Lisää treeni
 import { Container, Typography } from "@mui/material";
 import { Routes, Route, Link } from "react-router-dom";
 
+
 function TrainingsManagement() {
   const [trainings, setTrainings] = useState([]);
 
