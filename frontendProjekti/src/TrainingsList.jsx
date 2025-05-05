@@ -32,7 +32,7 @@ function TrainingsManagement() {
   return (
     <Container maxWidth="lg">
       <Typography variant="h4" gutterBottom>
-        Trainings Management 🏋️‍♂️
+        Training Management 🏋️‍♂️
       </Typography>
       <Typography variant="h5" gutterBottom>
         <Link to="/">Link to Customers Management</Link>

@@ -34,7 +34,7 @@ function CustomerManagement() {
         Customer Management 🏃‍♀️‍➡️
       </Typography>
       <Typography variant="h5" gutterBottom>
-      <Link to="/TrainingsList">Link to Trainings Mangement</Link>
+      <Link to="/TrainingsList">Link to Training Mangement</Link>
       </Typography>
       
       <CustomerTable

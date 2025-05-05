@@ -1,5 +1,6 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
-import { useState } from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, MenuItem } from "@mui/material";
+import { useState, useEffect } from "react";
+import { getCustomers } from "./customerApi"; // Tämä olettaa, että funktio on CustomersApi-tiedostossa.
 
 export default function AddTraining({ addTraining, loadTrainings }) {
   const [open, setOpen] = useState(false);
@@ -9,26 +10,53 @@ export default function AddTraining({ addTraining, loadTrainings }) {
     activity: '',
     customer: '',
   });
+  const [customers, setCustomers] = useState([]);
+
+  // Hakee asiakkaat, kun dialogi avataan
+  useEffect(() => {
+    if (open) {
+      const fetchCustomers = async () => {
+        try {
+          const customerData = await getCustomers();
+          setCustomers(customerData); // Oletuksena data._embedded.customers
+        } catch (error) {
+          console.error("Error fetching customers:", error);
+          setCustomers([]); // Jos virhe, aseta tyhjä lista
+        }
+      };
+      fetchCustomers();
+    }
+  }, [open]);
 
   const handleInputChange = (e) => {
     setTraining({ ...training, [e.target.name]: e.target.value });
   };
 
   const handleSave = async () => {
-    await addTraining(training);
-    loadTrainings();
-    setOpen(false);
-    setTraining({
-      date: '',
-      duration: '',
-      activity: '',
-      customer: '',
-    });
+    if (!training.customer) {
+      alert("Please select a customer!");
+      return;
+    }
+    try {
+      await addTraining(training);
+      loadTrainings();
+      setOpen(false);
+      setTraining({
+        date: '',
+        duration: '',
+        activity: '',
+        customer: '',
+      });
+    } catch (error) {
+      console.error("Error saving training:", error);
+    }
   };
 
   return (
     <>
-      <Button variant="contained" onClick={() => setOpen(true)}>Add Training</Button>
+      <Button variant="contained" onClick={() => setOpen(true)}>
+        Add Training
+      </Button>
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>New Training</DialogTitle>
         <DialogContent>
@@ -58,13 +86,21 @@ export default function AddTraining({ addTraining, loadTrainings }) {
             fullWidth
           />
           <TextField
+            select
             margin="dense"
-            label="Customer Link"
+            label="Customer"
             name="customer"
             value={training.customer}
-            onChange={handleInputChange}
+            onChange={(e) => setTraining({ ...training, customer: e.target.value })}
             fullWidth
-          />
+          >
+            {customers.length === 0 && <MenuItem disabled>No customers available</MenuItem>}
+            {customers.map((customer) => (
+              <MenuItem key={customer._links.self.href} value={customer._links.self.href}>
+                {customer.firstname} {customer.lastname}
+              </MenuItem>
+            ))}
+          </TextField>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>

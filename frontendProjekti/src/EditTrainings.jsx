@@ -1,24 +1,52 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
-import { useState } from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, MenuItem } from "@mui/material";
+import { useState, useEffect } from "react";
+import { getCustomers } from "./customerApi"; // Olettaa, että tämä on olemassa
 
 export default function EditTraining({ updateTraining, params, loadTrainings }) {
   const [open, setOpen] = useState(false);
   const [training, setTraining] = useState({ ...params.data });
+  const [customers, setCustomers] = useState([]);
+
+  // Hakee asiakkaat dialogin avauksen yhteydessä
+  useEffect(() => {
+    if (open) {
+      const fetchCustomers = async () => {
+        try {
+          const customerData = await getCustomers();
+          setCustomers(customerData);
+        } catch (error) {
+          console.error("Error fetching customers:", error);
+          setCustomers([]);
+        }
+      };
+      fetchCustomers();
+    }
+  }, [open]);
 
   const handleInputChange = (e) => {
     setTraining({ ...training, [e.target.name]: e.target.value });
   };
 
   const handleSave = async () => {
-    const id = training.id; // Assuming `id` is directly available in the training object
-    await updateTraining(id, training);
-    loadTrainings();
-    setOpen(false);
+    const id = training.id; // Olettaa, että `id` on osa `training`-objektia
+    if (!training.customer) {
+      alert("Please select a customer!");
+      return;
+    }
+    try {
+      await updateTraining(id, training);
+      loadTrainings();
+      setOpen(false);
+    } catch (error) {
+      console.error("Error updating training:", error);
+    }
   };
 
   return (
     <>
-      <Button variant="outlined" size="small" onClick={() => setOpen(true)}>Edit</Button>
+      <Button variant="outlined" size="small" onClick={() => setOpen(true)}>
+        Edit
+      </Button>
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Edit Training</DialogTitle>
         <DialogContent>
@@ -48,13 +76,21 @@ export default function EditTraining({ updateTraining, params, loadTrainings }) 
             fullWidth
           />
           <TextField
+            select
             margin="dense"
-            label="Customer Link"
+            label="Customer"
             name="customer"
             value={training.customer}
-            onChange={handleInputChange}
+            onChange={(e) => setTraining({ ...training, customer: e.target.value })}
             fullWidth
-          />
+          >
+            {customers.length === 0 && <MenuItem disabled>No customers available</MenuItem>}
+            {customers.map((customer) => (
+              <MenuItem key={customer._links.self.href} value={customer._links.self.href}>
+                {customer.firstname} {customer.lastname}
+              </MenuItem>
+            ))}
+          </TextField>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
