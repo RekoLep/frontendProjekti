@@ -7,7 +7,7 @@ export default function EditTraining({ updateTraining, params, loadTrainings }) 
   const [training, setTraining] = useState({ ...params.data });
   const [customers, setCustomers] = useState([]);
 
-  // Hakee asiakkaat dialogin avauksen yhteydessä
+  
   useEffect(() => {
     if (open) {
       const fetchCustomers = async () => {
@@ -28,7 +28,7 @@ export default function EditTraining({ updateTraining, params, loadTrainings }) 
   };
 
   const handleSave = async () => {
-    const id = training.id; // Olettaa, että `id` on osa `training`-objektia
+    const id = training.id; 
     if (!training.customer) {
       alert("Please select a customer!");
       return;

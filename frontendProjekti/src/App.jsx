@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { getCustomers, deleteCustomer } from "./customerApi";
 import { CustomerTable } from "./CustomerTable";
 import { Container, Typography } from "@mui/material";
-import { Routes, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 import ExportCustomers from "./ExportCustomers";
 import CalendarView from "./CalendarView";
 import TrainingsList from "./TrainingsList";
+import StatisticsPage from "./StatisticsPage";
 
 function CustomerManagement() {
   const [customers, setCustomers] = useState([]);
@@ -43,6 +44,9 @@ function CustomerManagement() {
       <Typography variant="h5" gutterBottom>
         <Link to="/CalendarView">Calendar</Link>
       </Typography>
+      <Typography variant="h5" gutterBottom>
+        <Link to="/StatisticsPage">Statistics page</Link>
+      </Typography>
       <CustomerTable
         customers={customers}
         removeCustomer={removeCustomer}
@@ -58,6 +62,7 @@ function App() {
       <Route path="/" element={<CustomerManagement />} />
       <Route path="/TrainingsList" element={<TrainingsList />} />
       <Route path="/CalendarView" element={<CalendarView />} />
+      <Route path="/StatisticsPage" element={<StatisticsPage />} />
     </Routes>
   );
 }

@@ -27,7 +27,7 @@ export function TrainingsTable({ trainings, removeTraining, loadTrainings }) {
           const customer = params.data?.customer;
           return customer
             ? `${customer.firstname} ${customer.lastname}`
-            : "Unknown Customer"; // Palautetaan oletusarvo, jos asiakastietoja ei ole
+            : "Unknown Customer"; 
         },
       },
       {

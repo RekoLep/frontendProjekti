@@ -10,7 +10,7 @@ export default function EditCustomer({ updateCustomer, params, loadCustomers }) 
   };
 
   const handleSave = async () => {
-    const id = customer._links.customer.href.split('/').pop(); // ottaa ID linkistä
+    const id = customer._links.customer.href.split('/').pop(); 
     await updateCustomer(id, customer);
     loadCustomers();
     setOpen(false);

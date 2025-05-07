@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getTrainings, deleteTraining, addTraining } from "./TrainingsApi"; // Kaikki samasta tiedostosta
-import TrainingsTable from "./TrainingsTable"; // Oletetaan että tämä on treenien taulukkomponentti
-import AddTrainings from "./AddTrainings"; // Lisää treeni
+import { getTrainings, deleteTraining, addTraining } from "./TrainingsApi"; 
+import TrainingsTable from "./TrainingsTable"; 
+import AddTrainings from "./AddTrainings"; 
 import { Container, Typography } from "@mui/material";
 import { Routes, Route, Link } from "react-router-dom";
 

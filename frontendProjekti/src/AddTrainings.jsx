@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, MenuItem } from "@mui/material";
 import { useState, useEffect } from "react";
-import { getCustomers } from "./customerApi"; // Tämä olettaa, että funktio on CustomersApi-tiedostossa.
+import { getCustomers } from "./customerApi"; 
 
 export default function AddTraining({ addTraining, loadTrainings }) {
   const [open, setOpen] = useState(false);
@@ -12,16 +12,16 @@ export default function AddTraining({ addTraining, loadTrainings }) {
   });
   const [customers, setCustomers] = useState([]);
 
-  // Hakee asiakkaat, kun dialogi avataan
+  
   useEffect(() => {
     if (open) {
       const fetchCustomers = async () => {
         try {
           const customerData = await getCustomers();
-          setCustomers(customerData); // Oletuksena data._embedded.customers
+          setCustomers(customerData); 
         } catch (error) {
           console.error("Error fetching customers:", error);
-          setCustomers([]); // Jos virhe, aseta tyhjä lista
+          setCustomers([]); 
         }
       };
       fetchCustomers();

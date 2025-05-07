@@ -1,8 +1,8 @@
-// customerApi.js
+
 
 const BASE_URL = 'https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers';
 
-// Hakee kaikki asiakkaat
+
 export async function getCustomers() {
     const response = await fetch(BASE_URL);
     if (!response.ok) {
@@ -12,7 +12,7 @@ export async function getCustomers() {
     return data._embedded.customers;
 }
 
-// Hakee yhden asiakkaan ID:llä (ei välttämätön jos et tarvitse yksittäishakuja)
+
 export async function getCustomerById(id) {
     const response = await fetch(`${BASE_URL}/${id}`);
     if (!response.ok) {
@@ -22,7 +22,7 @@ export async function getCustomerById(id) {
     return data;
 }
 
-// Lisää uuden asiakkaan
+
 export async function addCustomer(customer) {
     const response = await fetch(BASE_URL, {
         method: 'POST',
@@ -35,7 +35,7 @@ export async function addCustomer(customer) {
     return await response.json(); // Palautetaan luotu asiakas
 }
 
-// Päivittää asiakkaan tiedot
+
 export async function updateCustomer(id, customer) {
     const response = await fetch(`${BASE_URL}/${id}`, {
         method: 'PUT',
@@ -45,10 +45,10 @@ export async function updateCustomer(id, customer) {
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return await response.json(); // Palautetaan päivitetty asiakas
+    return await response.json(); 
 }
 
-// Poistaa asiakkaan
+
 export async function deleteCustomer(id) {
     const response = await fetch(`${BASE_URL}/${id}`, {
         method: 'DELETE',
@@ -56,5 +56,5 @@ export async function deleteCustomer(id) {
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return true; // Poisto onnistui
+    return true; 
 }
